@@ -1,0 +1,41 @@
+Query 1 :
+
+SELECT TOP (10) Product_Dim.ProductName, SUM(Club_Fact.TotalAmount) AS Total_Cost
+FROM     Club_Fact INNER JOIN
+                  Product_Dim ON Club_Fact.ProductKey = Product_Dim.ProductKey
+GROUP BY Product_Dim.ProductName
+ORDER BY Total_Cost DESC
+
+
+
+
+Query 2 :
+
+SELECT  Product_Dim.ProductName,Customer_Dim.Country, SUM(Club_Fact.TotalAmount) AS Total_Cost
+FROM     Club_Fact INNER JOIN
+                  Customer_Dim ON Club_Fact.CustomerKey = Customer_Dim.CustomerKey INNER JOIN
+                  Product_Dim ON Club_Fact.ProductKey = Product_Dim.ProductKey
+WHERE Product_Dim.ProductName = 'Alice Mutton'
+GROUP BY Product_Dim.ProductName, Customer_Dim.Country
+
+
+
+Query 3 :
+
+SELECT Product_Dim.ProductName, Calendar_Dim.Month_, SUM(Club_Fact.Quantity) AS Total_Quantity
+FROM     Club_Fact INNER JOIN
+                  Product_Dim ON Club_Fact.ProductKey = Product_Dim.ProductKey INNER JOIN
+                  Calendar_Dim ON Club_Fact.CalendarKey = Calendar_Dim.CalendarKey
+WHERE Product_Dim.ProductName = 'Chai'
+GROUP BY Calendar_Dim.Month_ ,  Product_Dim.ProductName
+ORDER BY Calendar_Dim.Month_
+
+
+Query 4 :
+
+SELECT Product_Dim.ProductName, SUM(Club_Fact.Quantity * Club_Fact.UnitPrice) AS Product_Value
+FROM     Product_Dim INNER JOIN
+                  Club_Fact ON Product_Dim.ProductKey = Club_Fact.ProductKey
+WHERE Product_Dim.ProductName IN ('Alice Mutton', 'Aniseed Syrup' ,'Boston Crab Meat','Camembert Pierrot','Carnarvon Tigers','Chai', 'Chang','Chartreuse verte')
+GROUP BY Product_Dim.ProductName
+ORDER BY Product_Dim.ProductName
